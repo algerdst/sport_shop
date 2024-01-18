@@ -1,0 +1,257 @@
+body{
+    background-color: rgb(227,227,227);
+    margin:0 ;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.wrapper{
+    margin: 2% 10% 0 10%;
+    background-color: white;
+}
+
+header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2em;
+    height: 6em;
+    background: #3C388D;
+}
+
+footer{
+    background-color: rgb(63,71,84);
+    height: 10em;
+    margin-top: 2em;
+}
+
+.search_field{
+    width: 70%;
+    height: 40px;
+    margin-left: 5em;
+}
+
+
+.header_nav{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-right: 5%;
+}
+
+.nav_link{
+    width: 100%;
+    height: 100%;
+    margin-right: 5px;
+    color: white;
+}
+
+.nav_link:hover{
+    color:	rgb(233,27,36) ;
+}
+
+.basket{
+    border-radius:15px;
+    margin: auto;
+    margin-top: 100px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.basket_products{
+    min-height:13em;
+    border-radius:15px;
+    align-items: center;
+    display: flex;
+}
+
+.basket_product{
+    flex-basis: 30%;
+    height: 100%;
+    border-radius:15px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.basket_product.description{
+    flex-basis: 70%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px 10px 10px;
+}
+
+.basket_total_price{
+    height: 40px;
+    border-radius:15px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.order{
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+}
+
+.pop_categories{
+    display: flex;
+    justify-content: center;
+}
+
+.pop_category{
+    border: 1px solid grey;
+    padding: 1%;
+}
+
+.products{
+    display: flex;
+    width: 80%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.filters{
+    width: 25%;
+    min-height: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product{
+    min-height: 25em;
+    flex-basis: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 1em;
+    margin-right: 1em;
+}
+
+.product:hover{
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.4);
+}
+
+.marks_block{
+    display: flex;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.in_cart_button{
+    margin-top: 0.5em;
+    background: #9FC53A;
+    text-align: center;
+    font-size: 1.5em;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+}
+
+.in_cart_button:hover{
+   text-shadow: 0 0 5px #ffffff;
+  text-align: center;
+
+}
+
+.product:hover{
+    background-color: rgb(240, 244, 245);
+}
+
+.product_img{
+    width: 100%;
+    height: 17em;
+    box-sizing: border-box;
+}
+
+.wrap{
+    display: flex;
+}
+
+.form_field{
+    height: 2em;
+    margin-top: 3%;
+    margin-bottom: 7%;
+}
+
+.user_form_block{
+    margin: auto;
+    margin-top: 2em;
+    margin-bottom: 20em;
+    border-radius: 20px;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.4);
+    min-height: 30%;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user_form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 8%;
+    margin-bottom: 8%;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile_wrap{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10em;
+    margin-top: 10em;
+}
+
+.profile{
+    min-height: 20%;
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.orders{
+    min-height: 20%;
+    flex-basis: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+.wrap-product{
+    display: flex;
+    margin-top: 5em;
+    justify-content: space-evenly;
+}
+
+.caruselle{
+    flex-basis: 45%;
+    min-height: 30em;
+    /*overflow: hidden;*/
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.about_product{
+    flex-basis: 40%;
+    min-height: 30em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

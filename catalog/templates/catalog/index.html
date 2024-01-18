@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Главная{% endblock %}
+{% load filters %}
+{% load widget_tweaks %}
+
+
+{% block search_field %}
+    <form action="" method="get" style="width: 70%; margin: auto">
+        {{ form.search|add_class:'search_field' }}
+    </form>
+{% endblock %}
+
+{% block content %}
+    <div class="pop_categories">
+        {% for brand in brands %}
+            <div class="pop_category">
+                <a href="{% url 'brand_filter' slug=brand.slug %}">{{ brand }}</a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="wrap">
+        <div class="filters">
+            <h2>Фильтры</h2>
+                <nav>
+                    <ul style="display: flex; flex-direction: column">
+                        {% for item_type in items_types %}
+                            <li><a href="{% url 'item_type_filter' slug=item_type.slug %}">{{ item_type }}</a>
+                                <ul>
+                                    {% for category in item_type.categories.all %}
+                                        <li><a href="{% url 'filter' slug=category.slug %}">{{ category }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+        </div>
+        <div class="products">
+            {% for product in products %}
+                <div class="product">
+                    <a href="{% url 'product' slug=product.slug %}"><img src="{{ product.images.all|first }}" alt=""
+                                                                         class="product_img"></a>
+                    <a href="{% url 'product' slug=product.slug %}"
+                       style="margin-top:0.5em;margin-bottom:0.5em">{{ product.name|truncatechars:26 }} </a>
+                    <p style="color: black; font-weight: bold; font-size: 1.5em; margin: auto">{{ product.price }}
+                        руб.</p>
+                    <a href="{% url "basket_add" product_id=product.id %}" class="in_cart_button">В корзину</a>
+                    <div class="marks_block">
+                        {% for i in product.mark|range %}
+                            <img src="{% static 'img/fullstar.png' %}" alt="" style="width: 1em; height: 1em">
+                        {% endfor %}
+                        {% for i in 5|sub:product.mark|range %}
+                            <img src="{% static 'img/emptystar.png' %}" alt="" style="width: 1em; height: 1em">
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

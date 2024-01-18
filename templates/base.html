@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    {% block block_for_css %}
+        <link rel="stylesheet" href="{% static 'styles/css/base.css' %}">
+        <link rel="stylesheet" href="{% static 'styles/css/menu.css' %}">
+    {% endblock %}
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" alt="ЛОГО"
+                                        style="width: 150px ; height: 150px;"></a>
+        {% block search_field %}
+        {% endblock %}
+        <div class="header_nav">
+            {% if user.is_authenticated %}
+                <a class="nav_link" href="{% url 'profile' %}">Заказы</a>|&nbsp
+                {% if user.is_superuser %}
+                    <a class="in_cart_button" style="font-size: 0.8em; background: red" href="/admin">Админ-панель</a>&nbsp|&nbsp
+                {% endif %}
+                <a class="nav_link" href="{% url 'cart' %}">Корзина</a>|&nbsp
+                <a class="nav_link" href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                <a class="nav_link" href="{% url 'authorization' %}">Войти</a>|&nbsp
+                <a class="nav_link" href="{% url 'registration' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </header>
+    {% block content %}
+
+    {% endblock %}
+    <footer>
+
+    </footer>
+</div>
+</body>
+</html>

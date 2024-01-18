@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %} Профиль {% endblock %}
+
+{% block content %}
+    <div class="profile_wrap">
+        <div class="profile">
+            <img src="{{ user.image.url }}" alt="" style="height: 5em; width: 5em">
+            <p>Имя пользователя <strong>{{ user.username }}</strong></p>
+            <p>Email <strong>{{ user.email }}</strong></p>
+            <p>Адрес доставки <strong>{{ user.address }}</strong></p>
+        </div>
+        <div class="orders">
+            <h2 style="text-align: center">Заказы</h2>
+            {% for order in orders %}
+                <div class="order">
+                    <p>{{ order }}</p>
+                    <a href="{% url 'return_order' order_id=order.id %}" style="margin-bottom: 20px" class="in_cart_button">Отменить заказ</a>
+                    <a href="{% url 'save_pdf' order_id=order.id %}"><img src="{% static 'img/pdf.png' %}"
+                                                                          style="width: 2em; height: 2em" alt=""></a>
+                    <p>Печать чека</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+

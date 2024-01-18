@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block title %} Регистрация {% endblock %}
+
+
+{% block block_for_css %}
+    <link rel="stylesheet" href="{% static 'styles/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/css/auth_reg.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% if form.errors %}
+        {{ form.errors }}
+    {% endif %}
+    {% if messages or form.non_field_errors %}
+        {% if messages %}
+            {% for message in messages %}
+                <p style="text-align: center">{{ message }}</p>
+            {% endfor %}
+        {% else %}
+            <p style="text-align: center">{{ form.non_field_errors }}</p>
+        {% endif %}
+    {% endif %}
+    <div class="user_form_block">
+        <div style="background: #3C388D;border-bottom:3px solid rgb(220, 220, 220); width: 100%; flex-basis: 10%">
+            <h1 style="text-align: center;color: white">Регистрация</h1>
+        </div>
+        <form action="" method="post" class="user_form">
+            {% csrf_token %}
+            {{ form.first_name|add_class:"form_field" }}
+            {{ form.last_name|add_class:"form_field" }}
+            {{ form.username|add_class:"form_field" }}
+            {{ form.email|add_class:"form_field" }}
+            {{ form.address|add_class:"form_field" }}
+            {{ form.password1|add_class:"form_field" }}
+            {{ form.password2|add_class:"form_field" }}
+            <button style="background: #9FC53A; color: white; padding: 5px; border-radius: 5px">Зарегистрироваться
+            </button>
+        </form>
+        <div style="background: #3C388D;border-top:3px solid rgb(220, 220, 220); width: 100%; display: flex;
+                                     justify-content: center; align-items: center; height: 2em">
+            <a href="{% url 'authorization' %}" style="color: white">Уже есть аккаунт?
+                Авторизироваться </a>
+        </div>
+    </div>
+{% endblock %}

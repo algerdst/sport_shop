@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %} Авторизация {% endblock %}
+{% block block_for_css %}
+    <link rel="stylesheet" href="{% static 'styles/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/css/auth_reg.css' %}">
+{% endblock %}
+{% block content %}
+    {% if messages or form.non_field_errors %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% else %}
+            {{ form.non_field_errors }}
+        {% endif %}
+    {% endif %}
+    <div class="user_form_block">
+        <div style="background: #3C388D;border-bottom:3px solid rgb(220, 220, 220); width: 100%; flex-basis: 10%">
+            <h1 style="text-align: center;color: white">Авторизация</h1>
+        </div>
+        <form action="" method="post" class="user_form">
+            {% csrf_token %}
+            {{ form.username|add_class:"form_field" }}
+            {{ form.password|add_class:"form_field" }}
+            <button style="background: #9FC53A; color: white; padding: 5px; border-radius: 5px">Войти
+            </button>
+        </form>
+        <div style="background: #3C388D;border-top:3px solid rgb(220, 220, 220); width: 100%; display: flex;
+                                     justify-content: center; align-items: center; height: 2em">
+            <a href="{% url 'registration' %}" style="color: white">Нужен аккаунт?
+                Зарегистрироваться </a>
+        </div>
+    </div>
+{% endblock %}
+

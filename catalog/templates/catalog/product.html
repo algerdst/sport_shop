@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load filters %}
+{% block title %}
+    {{ product.name }}
+{% endblock %}
+{% block block_for_css %}
+    <link rel="stylesheet" href="{% static 'styles/css/carusel.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/css/base.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="wrap-product">
+        <div class="caruselle">
+            <div class="carusel">
+                {% for img in product.images.all %}
+                    <input type="radio" name="position"/>
+                {% endfor %}
+                <main id="carousel">
+                    {% for img in product.images.all %}
+                        <div class="item"><img src="{{ img }}" style="width: 100%; height: auto" alt=""></div>
+                    {% endfor %}
+                </main>
+            </div>
+        </div>
+        <div class="about_product">
+            <h1>{{ product.name }}</h1>
+            <div class="marks_block">
+                {% for i in product.mark|range %}
+                    <img src="{% static 'img/fullstar.png' %}" alt="" style="width: 1em; height: 1em">
+                {% endfor %}
+                {% for i in 5|sub:product.mark|range %}
+                    <img src="{% static 'img/emptystar.png' %}" alt="" style="width: 1em; height: 1em">
+                {% endfor %}
+            </div>
+            <a href="" style="color:rgb(24,96,173);; font-size: 0.7em">Поставить оценку</a>
+            <h3 style="color: rgb(233,27,36); font-size: 2em">{{ product.price }} руб.</h3>
+            <a href="{% url 'basket_add' product_id=product.id %}" class="in_cart_button">В корзину</a>
+            <h4>{{ product.description }}</h4>
+            <p>Поставить оценку</p>
+            <div class="marks_block" style="align-items: center">
+                <a href="{% url 'get_mark' mark_id=1 product_id=product.id %}"><img src="{% static 'img/fullstar1.png' %}" alt="" style="width: 1.5em; height: 1.5em"></a>
+                <a href="{% url 'get_mark' mark_id=2 product_id=product.id%}"><img src="{% static 'img/fullstar2.png' %}" alt="" style="width: 1.7em; height: 1.7em"></a>
+                <a href="{% url 'get_mark' mark_id=3 product_id=product.id%}"><img src="{% static 'img/fullstar3.png' %}" alt="" style="width: 1.9em; height: 1.9em"></a>
+                <a href="{% url 'get_mark' mark_id=4 product_id=product.id%}"><img src="{% static 'img/fullstar4.png' %}" alt="" style="width: 2.1em; height: 2.1em"></a>
+                <a href="{% url 'get_mark' mark_id=5 product_id=product.id%}"><img src="{% static 'img/fullstar5.png' %}" alt="" style="width: 2.3em; height: 2.3em"></a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

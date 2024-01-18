@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Корзина {% endblock %}
+
+{% block content %}
+    <div class="basket">
+    <h2 style="text-align: center">Корзина</h2>
+
+    {% if not baskets %}
+        <h3 style="text-align: center">Ваша корзина пуста</h3>
+    {% else %}
+    <h4 style="text-align: center">Всего товаров {{ total_quantity }} шт.</h4>
+    {% endif %}
+    {% for basket in baskets %}
+        <div class="basket_products">
+            <div class="basket_product">
+                <img src="{{ basket.product.images.all|first }}" alt="" style="width: 8em; height: 10em">
+            </div>
+            <div class="basket_product description">
+                <p>{{ basket.product.name }}</p>
+                <p>{{ basket.quantity }} шт.</p>
+                <p>{{ basket.sum }} руб.</p>
+                <a href="{% url 'basket_remove' basket_id=basket.id %}" class="in_cart_button"
+                   style="display: flex; align-items: center">Удалить</a>
+            </div>
+            <a href="" class="delete"></a>
+        </div>
+    {% endfor %}
+    <div></div>
+    {% if baskets %}
+        <div class="basket_total_price">
+            <p style="margin: auto; margin-left: 30px">Итого</p>
+            <p style="margin: auto; margin-right: 30px">{{ total_sum }} руб.</p>
+        </div>
+        <a href="{% url 'make_order' %}" class="in_cart_button" style="background: #4ac1f7; border: none;
+                                                                                text-align: center">ОФОРМИТЬ ЗАКАЗ</a>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
+
