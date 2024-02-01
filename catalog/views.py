@@ -9,19 +9,18 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 
+from rest_framework import generics, viewsets
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from users.models import Basket, Order
 
 from .forms import SearchForm
-from .models import Brand, Category, ItemType, PopularCategory, Product
+from .serializers import ProductSerializer, CategorySerializer
+from .models import Brand, Category, ItemType, Product
 
 pdfmetrics.registerFont(TTFont('Arial', 'arial.ttf'))
 
-
-def test(request):
-    data={
-        'item_types':ItemType.objects.all()
-    }
-    return render(request,'catalog/test.html', context=data)
 
 
 def index(request):
@@ -145,6 +144,7 @@ def basket_remove(request, basket_id):
 def make_order(request):
     """
     Отвечает за кнопку оформления заказа
+    После нажатия кнопки, генерируется pdf документ с деталями заказа
     """
     baskets = Basket.objects.filter(user=request.user)  # Получаем все позиции, которые пользователь хочет заказать
     for basket in baskets:
@@ -183,21 +183,21 @@ def make_order(request):
     p.drawString(420, 650, f"Цена      |")
     p.drawString(510, 650, f"Сумма      |")
 
-    string=600
+    string = 600
     for basket in baskets:
-        product=basket.product.name
-        quantity=basket.quantity
-        price=basket.product.price
-        summa=basket.product.price*quantity
+        product = basket.product.name
+        quantity = basket.quantity
+        price = basket.product.price
+        summa = basket.product.price * quantity
         p.drawString(30, string, f"{product}")
         p.drawString(320, string, f"{quantity}")
         p.drawString(430, string, f"{price}")
         p.drawString(520, string, f"{summa}")
-        string-=50
+        string -= 50
     p.drawString(30, string, f"Имя:    {request.user.first_name}")
-    p.drawString(30, string-50, f"Фамилия:    {request.user.last_name}")
-    p.drawString(30, string-100, f"Адрес доставки:    {request.user.address}")
-    p.drawString(30, string-150, f"Всего {total_quantity} товаров на {total_sum} руб.")
+    p.drawString(30, string - 50, f"Фамилия:    {request.user.last_name}")
+    p.drawString(30, string - 100, f"Адрес доставки:    {request.user.address}")
+    p.drawString(30, string - 150, f"Всего {total_quantity} товаров на {total_sum} руб.")
     p.showPage()
     p.save()
     buffer.seek(0)
@@ -252,3 +252,29 @@ def get_mark(request, mark_id, product_id):
     product.calculate_mark(new_mark=mark_id)
     product.save()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+# ----------------api----------------
+
+class ProductsViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+# class ProductsApiView(generics.ListCreateAPIView):
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
+#
+#
+# class ProductApiUpdateView(generics.UpdateAPIView):
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
+#
+#
+# class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
+#
+#
+# class CategoriesApiView(generics.ListCreateAPIView):
+#     queryset = Category.objects.all()
+#     serializer_class = CategorySerializer

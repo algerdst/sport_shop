@@ -47,7 +47,8 @@ nav ul ul {
 
 /* отображаем выпадающий список при наведении */
 nav ul li:hover > ul {
-	display:inherit;
+	display:flex;
+	min-width: 100%;
 }
 
 /* первый уровень выпадающего списка */

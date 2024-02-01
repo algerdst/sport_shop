@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'catalog',
     'users',
-    'widget_tweaks'
+    'widget_tweaks',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,12 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+# rest_framework
+
+REST_FRAMEWORK={
+    'DEFAULT_RENDERER_CLASSES':[
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer'
+    ]
+}
