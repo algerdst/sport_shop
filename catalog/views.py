@@ -2,6 +2,7 @@ import datetime
 import io
 
 from django.contrib import messages
+from django.forms import model_to_dict
 from django.http import FileResponse
 from django.shortcuts import HttpResponseRedirect, render
 from django.urls import reverse
@@ -10,17 +11,18 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 
 from rest_framework import generics, viewsets
-from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+
+from .serializers import *
+from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 
 from users.models import Basket, Order
 
 from .forms import SearchForm
-from .serializers import ProductSerializer, CategorySerializer
 from .models import Brand, Category, ItemType, Product
 
 pdfmetrics.registerFont(TTFont('Arial', 'arial.ttf'))
-
 
 
 def index(request):
@@ -256,25 +258,32 @@ def get_mark(request, mark_id, product_id):
 
 # ----------------api----------------
 
-class ProductsViewSet(viewsets.ModelViewSet):
+class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-# class ProductsApiView(generics.ListCreateAPIView):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
-#
-#
-# class ProductApiUpdateView(generics.UpdateAPIView):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
-#
-#
-# class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
-#
-#
-# class CategoriesApiView(generics.ListCreateAPIView):
-#     queryset = Category.objects.all()
-#     serializer_class = CategorySerializer
+    #Отдает все категории
+    @action(methods=['get'], detail=False)
+    def categories(self, request):
+        categories = Category.objects.all()
+        return Response({'categories': [cat.category_name for cat in categories]})
+
+    # Отдает одну категорию по id
+    @action(methods=['get'], detail=True)
+    def category(self, request, pk):
+        category = Category.objects.get(pk=pk)
+        return Response({'category': category.category_name})
+
+    #Отдает список товаров по слагу категории
+    @action(methods=['get'], detail=True)
+    def product_category(self, request, pk):
+        category = Category.objects.get(slug=pk)
+        products = Product.objects.filter(category=category)
+        return Response({'category': [{prod.name: prod.slug} for prod in products]})
+
+    # Отдает все бренды
+    @action(methods=['get'], detail=False)
+    def brand(self, request):
+        brands = Brand.objects.all()
+        return Response({'categories': [brand.brand_name for brand in brands]})
+
