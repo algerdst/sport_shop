@@ -13,9 +13,11 @@ from reportlab.pdfgen import canvas
 from rest_framework import generics, viewsets
 from rest_framework.views import APIView
 
+from .permissions import IsAdminOrReadOnly
 from .serializers import *
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 
 from users.models import Basket, Order
 
@@ -261,6 +263,7 @@ def get_mark(request, mark_id, product_id):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = (IsAdminOrReadOnly,)
 
     #Отдает все категории
     @action(methods=['get'], detail=False)

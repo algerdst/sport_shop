@@ -12,6 +12,7 @@ print(router.urls)
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
+    path('api/v1/auth-drf', include('rest_framework.urls')),
     path('api/v1/', include(router.urls)),
     path('users/', include('users.urls')),
     path('', include('catalog.urls')),
